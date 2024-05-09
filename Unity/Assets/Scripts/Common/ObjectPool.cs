@@ -1,4 +1,11 @@
-﻿using System;
+﻿/****************************************************
+	文件：ObjectPool.cs
+	作者：孙淳
+	邮箱: 1832259562@qq.com
+	日期：2024/05/04 20:02   	
+	功能：对象池
+*****************************************************/
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,48 +16,52 @@ class ObjectPool : Singleton<ObjectPool>
     /// </summary>
     private Dictionary<string, List<GameObject>> pool;
     /// <summary>
-    /// 预设体
-    /// </summary>
-    private Dictionary<string, GameObject> prefabs;
-    /// <summary>
     /// 默认构造函数
     /// </summary>
     public ObjectPool()
     {
         pool = new Dictionary<string, List<GameObject>>();
-        prefabs = new Dictionary<string, GameObject>();
     }
-
     /// <summary>
     /// 从对象池中获取对象
     /// </summary>
     /// <param name="objName"></param>
     /// <returns></returns>
-    public GameObject GetObj(string path, string objName)
+    public GameObject GetObj(string path, string prefabName)
     {
         GameObject result = null;
-        if (pool.ContainsKey(objName))
+        string cloneName = prefabName + "(Clone)";
+        if (pool.ContainsKey(cloneName) && pool[cloneName].Count > 0)
         {
-            if (pool[objName].Count > 0)
-            {
-                result = pool[objName][0];
-                result.SetActive(true);
-                pool[objName].Remove(result);
-                return result;
-            }
+            result = pool[cloneName][0];
+            result.SetActive(true);
+            pool[cloneName].Remove(result);
+            //Debug.LogError("对象池获取");
         }
-        GameObject prefab = null;
-        if (prefabs.ContainsKey(objName))
+        if (result) return result;
+        //对象池内没有对象，实例化并加载
+        result = LoadAndInstantiate(path, prefabName);
+        return result;
+    }
+    /// <summary>
+    /// 加载并实例化
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="prefabName"></param>
+    /// <returns></returns>
+    private GameObject LoadAndInstantiate(string path, string prefabName)
+    {
+        GameObject result = null;
+        //同步加载，需要迭代
+        GameObject prefab = Resources.Load<GameObject>(path + '/' + prefabName);
+        if (prefab)
         {
-            prefab = prefabs[objName];
+            result = UnityEngine.Object.Instantiate(prefab);
         }
         else
         {
-            //待迭代，Resources文件加载prefab
-            prefab = Resources.Load<GameObject>(path + '/' + objName);
-            prefabs.Add(objName, prefab);
+            Debug.LogError("资源加载失败，请检查路径是否正确");
         }
-        result = UnityEngine.Object.Instantiate(prefab);
         return result;
     }
 
@@ -61,7 +72,11 @@ class ObjectPool : Singleton<ObjectPool>
     public void RecycleObj(GameObject obj, bool isDelete = false)
     {
         obj.SetActive(false);
-        if (isDelete) return;
+        if (isDelete)
+        {
+            UnityEngine.Object.Destroy(obj);
+            return;
+        }
         if (pool.ContainsKey(obj.name))
         {
             pool[obj.name].Add(obj);

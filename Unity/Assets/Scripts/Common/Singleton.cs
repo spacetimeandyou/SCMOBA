@@ -11,7 +11,7 @@ using System.Collections.Generic;
 public abstract class Singleton<T> where T : class, new()
 {
     private static T _instance = null;
-    private static readonly String Singleton_Lock = new String("Singleton_Lock");
+    private static readonly String Singleton_Lock = new("Singleton_Lock");
 
     public static T Instance
     {
