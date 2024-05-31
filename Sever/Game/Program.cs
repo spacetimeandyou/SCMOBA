@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Game
 {
@@ -11,6 +12,7 @@ namespace Game
 			}
 
 			NetManager.StartLoop(8888);
-		}
+            
+        }
 	}
 }

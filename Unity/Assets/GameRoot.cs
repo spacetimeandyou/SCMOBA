@@ -5,6 +5,8 @@ public class GameRoot : MonoBehaviour
 {
     public static GameRoot Instance = null;
     public static string id = "";
+    public static int locatId;
+    public static int camp;
 
     private void Start()
     {
@@ -19,6 +21,7 @@ public class GameRoot : MonoBehaviour
         EventCenter.Instance.AddListener(EventName.ConnectClose, OnConnectClose);
         EventCenter.Instance.AddListener("MsgKick", OnMsgKick);
         UIManager.Instance.Init();
+        BattleManager.Instance.Init();
         UIManager.Instance.ActiveUI<Form_Login>(UIPanel.Form_Login);
     }
 
@@ -27,6 +30,7 @@ public class GameRoot : MonoBehaviour
         NetManager.Update();
         UIManager.Instance.Update(Time.deltaTime);
         ResourcesManager.Instance.Update();
+        BattleManager.Instance.Update();
     }
     
     void OnConnectClose(object sender, EventArgs args)
