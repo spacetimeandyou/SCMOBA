@@ -15,7 +15,8 @@ class PlayerEntity : BaseEntity
     public LVector2 Dir
     {
         get { return dir;} 
-        set { 
+        set {
+            if (value == LVector2.zero) return;
             dir = value.normalized;
             transform.pos = transform.pos + dir * speed * deltaTime;
             var targetDeg = dir.ToDeg();
@@ -51,7 +52,7 @@ class PlayerEntity : BaseEntity
     #endregion
     
     public int damage = BattleConfig.skillConfig[0];//普攻
-    public override void Init()
+    protected override void Init()
     {
         //设置血量
         maxHealth = 100;
@@ -61,6 +62,7 @@ class PlayerEntity : BaseEntity
     public virtual void TakeDamage(BaseEntity atker, int amount, LVector3 hitPoint)
     {
         if (isDead) return;
+        if (camp == atker.camp) return; 
         curHealth -= amount;
         entityView?.OnTakeDamage(amount, hitPoint);
         if (isDead)
@@ -74,5 +76,8 @@ class PlayerEntity : BaseEntity
         entityView?.OnDead();
         PhysicSystem.Instance.RemoveCollider(this);
     }
+    public override void OnLPTriggerEnter(ColliderProxy other) { Debug.LogError("执行碰撞进入"); }
+    public override void OnLPTriggerExit(ColliderProxy other) { Debug.LogError("执行碰撞退出"); }
+    public override void OnLPTriggerStay(ColliderProxy other) { Debug.LogError("执行碰撞停留"); }
 }
 

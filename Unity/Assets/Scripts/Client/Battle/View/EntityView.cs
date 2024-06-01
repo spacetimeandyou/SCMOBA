@@ -36,10 +36,15 @@ class EntityView:MonoBehaviour, IEntityView
     private void Update()
     {
         var pos = entity.transform.Pos3.ToVector3();
-        transform.position = Vector3.Lerp(transform.position, pos, 0.3f);
-        var deg = entity.transform.deg.ToFloat();
-        if (entity.camp == 1) deg += 90;
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, deg, 0), 0.2f);
+        if (transform.position != pos)
+        {
+            transform.position = Vector3.Lerp(transform.position, pos, 0.3f);
+            var deg = entity.transform.deg.ToFloat();
+            //if (entity.camp == 1) ;
+            //else deg += ;
+            deg += 90;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, deg, 0), 0.2f);
+        }
     }
 }
 

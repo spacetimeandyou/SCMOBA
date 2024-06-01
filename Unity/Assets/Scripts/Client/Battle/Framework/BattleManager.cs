@@ -12,6 +12,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
+   
 class BattleManager : Singleton<BattleManager>
 {
     public static bool StartTick { get; private set; }//是否开始Tick
@@ -143,12 +144,19 @@ class BattleManager : Singleton<BattleManager>
         if (StartTick)
         {
             //逻辑帧
+            //_deltaTime += Time.deltaTime;
             _deltaTime = (DateTime.Now - _lastUpdateTime).TotalMilliseconds;
-            if (_deltaTime > UpdateInterval)
+            while (_deltaTime> UpdateInterval)
             {
+                _deltaTime -= UpdateInterval;
                 _lastUpdateTime = _lastUpdateTime.AddMilliseconds(UpdateInterval);
                 SendPlayerInput();
                 Tick++;
+                //// 将字典的信息格式化为字符串
+                //StringBuilder sb = new StringBuilder();
+                //sb.AppendLine("当前帧" + Tick+"最后更新时间"+DateTime.Now);
+                //// 将字符串写入到文件中
+                //File.AppendAllText("client.txt", sb.ToString());
             }
             world.DoUpdate();
         }
@@ -168,16 +176,6 @@ class BattleManager : Singleton<BattleManager>
         playerInput.skillId = inputComponent.skillID;
         playerInput.dirX = inputComponent.dirX;
         playerInput.dirY = inputComponent.dirY;
-        
-        // 将字典的信息格式化为字符串
-        StringBuilder sb = new StringBuilder();
-        sb.AppendLine("当前帧" + Tick);
-        int x = playerInput.dirX;
-        int y = playerInput.dirY;
-        int id = playerInput.skillId;
-        sb.AppendLine(x + "/" + y + "/" + id);
-        // 将字符串写入到文件中
-        File.AppendAllText("client.txt", sb.ToString());
 
         //发送网络消息
         msgPlayerInput.CPlayerInput = playerInput;

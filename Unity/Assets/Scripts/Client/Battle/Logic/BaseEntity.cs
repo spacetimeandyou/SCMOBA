@@ -16,7 +16,7 @@ class BaseEntity: ILPTriggerEventHandler
     public int curHealth;//当前血量
     public EntityView entityView;
     public bool isDead => curHealth <= 0;
-    public virtual void Init(){}
+    protected virtual void Init(){}
 
     public virtual void OnLPTriggerEnter(ColliderProxy other){ }
     public virtual void OnLPTriggerExit(ColliderProxy other){ }

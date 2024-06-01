@@ -45,8 +45,8 @@ class World:BaseLifeCycle
             if(GameRoot.locatId == i)
             {
                 Camera mainCamera = Camera.main;
-                if (data[i].camp == 1) mainCamera.transform.localPosition = new Vector3(-4.68f, 6.66f, -2.36f);
-                else mainCamera.transform.localPosition = new Vector3(-95.83f, 4.56f, -103.17f);
+                if (data[i].camp == 1) mainCamera.transform.localPosition = new Vector3(-5.31f, 8.84f, -2.92f);
+                else mainCamera.transform.localPosition = new Vector3(-97.28f, 8.84f, -103.57f);
                 mainCamera.gameObject.AddComponent<CameraFollow>();
                 mainCamera.transform.LookAt(player.gameObject.transform);
                 CameraFollow cameraFollow = mainCamera.gameObject.GetComponent<CameraFollow>();
@@ -67,7 +67,7 @@ class World:BaseLifeCycle
     public override void DoUpdate()
 	{
         //表现
-        if (BattleManager.CurTick < BattleManager.Tick && BattleManager._allHistoryFrames.ContainsKey(BattleManager.CurTick))
+        while(BattleManager.CurTick < BattleManager.Tick && BattleManager._allHistoryFrames.ContainsKey(BattleManager.CurTick))
         {
             WorldExecute(BattleManager._allHistoryFrames[BattleManager.CurTick]);
             //执行历史帧数据

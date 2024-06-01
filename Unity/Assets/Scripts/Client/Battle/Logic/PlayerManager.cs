@@ -77,6 +77,7 @@ class PlayerManager:Singleton<PlayerManager>
         
         towerEntity.gameObject = GetMainTowerObject(towerEntity.camp);
         BindEntityView(towerEntity);
+        towerEntity.ResetPos(towerEntity.gameObject);
         return towerEntity;
     }
     private GameObject GetMainTowerObject(int camp)

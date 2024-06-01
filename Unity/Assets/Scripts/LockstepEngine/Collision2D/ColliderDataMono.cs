@@ -20,9 +20,9 @@ namespace Lockstep.Collision2D {
 #if UNITY_5_3_OR_NEWER
         [Header("Collider data")]
 #endif
-        public LFloat high;
-        public LFloat radius;
-        public LVector2 size;
+        public LFloat high = 1;
+        public LFloat radius = 1;
+        public LVector2 size = new LVector2(1,1);
         public LVector2 up;
         public LFloat deg;
         
