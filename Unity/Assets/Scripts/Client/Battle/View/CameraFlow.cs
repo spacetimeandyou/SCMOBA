@@ -31,5 +31,9 @@ public class CameraFollow : MonoBehaviour
         // Smoothly interpolate between the camera's current position and it's target position.
         transform.position = Vector3.Lerp(transform.position, targetCamPos, 0.1f);
     }
+    public void OnDrawGizmos()
+    {
+        PhysicSystem.Instance.OnDrawGizmos();
+    }
 }
 

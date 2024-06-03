@@ -77,7 +77,10 @@ class SingleSystem : BaseSystem
         Debug.Log("dirX:" + inputComponent.dirX+ "dirY:" + inputComponent.dirY);
         //skill:普攻 1技能 2技能 3技能 额外技能槽1,2,3 先一个普攻
         inputComponent.skillID = 0;
-        if (Input.GetMouseButtonDown(0)) inputComponent.skillID = 1;
+        if (Input.GetMouseButtonDown(0))
+        {
+            inputComponent.skillID = 1;
+        }    
     }
 }
 

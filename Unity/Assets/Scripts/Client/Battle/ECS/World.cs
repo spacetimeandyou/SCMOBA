@@ -30,7 +30,7 @@ class World:BaseLifeCycle
         SystemManager.Instance.RegisterSystem(new SingleSystem());
         SystemManager.Instance.RegisterSystem(new MoveSystem());
         SystemManager.Instance.RegisterSystem(new PhysicSystem());
-        
+        SystemManager.Instance.RegisterSystem(new SkillSystem());
     }
     //创建玩家实体，确定出生点位置
     private void CreatPlayerEntity()
@@ -108,12 +108,11 @@ class World:BaseLifeCycle
             //移动
             ComponentManager.Instance.GetComponent<MovementComponent>(players[i].entity,(int)ComponentType.MovementComponent,out MovementComponent moveComp);
             moveComp.moveDirection = new LVector2(playerInputs[i].dirX,playerInputs[i].dirY);
-            //moveComp.moveDirection = new LVector2(1, 1);
-            Debug.Log(moveComp.moveDirection.x + moveComp.moveDirection.y);
-
+            //moveComp.moveDirection = new LVector2(1, 1); 
             //技能
             ComponentManager.Instance.GetComponent<SkillComponent>(players[i].entity, (int)ComponentType.SkillComponent, out SkillComponent skillComp);
             skillComp.skillId = playerInputs[i].skillId;
+            Debug.Log("技能ID:"+skillComp.skillId);
         }
         foreach (var system in SystemManager.Instance.GetAllSystems())
         {

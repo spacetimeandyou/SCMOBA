@@ -15,6 +15,7 @@ class TowerEntity:BaseEntity
 
         transform.deg = (LFloat)gO.transform.rotation.y;
         gO.transform.localRotation = Quaternion.Euler(gO.transform.rotation.x, transform.deg, gO.transform.rotation.z);
+        Init();
     }
 
     protected override void Init()
@@ -22,11 +23,12 @@ class TowerEntity:BaseEntity
         //设置血量
         maxHealth = 200;
         curHealth = maxHealth;
+        damage = 40;
     }
-    public virtual void TakeDamage(BaseEntity atker, int amount, LVector3 hitPoint)
+    public override void TakeDamage(BaseEntity atker, int amount, LVector3 hitPoint)
     {
         if (isDead) return;
-        if (camp == atker.camp) return;
+        //if (camp == atker.camp) return;
         curHealth -= amount;
         entityView?.OnTakeDamage(amount, hitPoint);
         if (isDead)
@@ -35,7 +37,7 @@ class TowerEntity:BaseEntity
         }
     }
 
-    protected virtual void OnDead()
+    protected override void OnDead()
     {
         entityView?.OnDead();
         PhysicSystem.Instance.RemoveCollider(this);

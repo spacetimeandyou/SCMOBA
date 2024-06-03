@@ -20,7 +20,7 @@ class PhysicSystem : BaseSystem
         new Dictionary<ColliderProxy, ILPTriggerEventHandler>();
 
     public bool[] collisionMatrix => new bool[9];
-    public LVector3 pos => new LVector3(0, 0, 0);
+    public LVector3 pos => new Vector3(-50, 0.2f, -50).ToLVector3();
     public LFloat worldSize => new LFloat(100);
     public LFloat minNodeSize => new LFloat(1);
     public LFloat loosenessval => new LFloat(true, 1250);
@@ -126,7 +126,7 @@ class PhysicSystem : BaseSystem
         collisionSystem.RemoveCollider(collider);
     }
 
-    void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         collisionSystem?.DrawGizmos();
     }

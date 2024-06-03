@@ -19,7 +19,7 @@ class BattleManager : Singleton<BattleManager>
     public static int CurTick { get; set; }//表现帧
     public static int Tick { get; set; }//逻辑帧
 
-    public static Dictionary<int, PlayerInput[]> _allHistoryFrames = new Dictionary<int, PlayerInput[]>(); //历史帧
+    public static Dictionary<int, PlayerInput[]> _allHistoryFrames;
 
     private World world = null;
     /// <summary>
@@ -132,6 +132,7 @@ class BattleManager : Singleton<BattleManager>
         world = new World();
         playerInput = new PlayerInput();
         msgPlayerInput = new MsgPlayerInput();
+        _allHistoryFrames = new Dictionary<int, PlayerInput[]>();
         world.DoAwake();
         _lastUpdateTime = DateTime.Now;
         StartTick = true;
@@ -158,7 +159,9 @@ class BattleManager : Singleton<BattleManager>
                 //// 将字符串写入到文件中
                 //File.AppendAllText("client.txt", sb.ToString());
             }
+            
             world.DoUpdate();
+
         }
     }
 
@@ -167,6 +170,8 @@ class BattleManager : Singleton<BattleManager>
         StartTick = false;
         world.DoDestroy();
         world = null;
+        _allHistoryFrames = null;
+        PlayerManager.Instance.Clear();
     }
 
     public void SendPlayerInput()

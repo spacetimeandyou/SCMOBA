@@ -92,10 +92,10 @@ public class UIFloatBar : MonoBehaviour {
         delayTimestamp = Time.time + config.onHit.duration;
 
 
-        if (showHealthInfo)
+        //if (showHealthInfo)
             healthInfo.text = curVal + " / " + maxVal;
-        else
-            healthInfo.text = "";
+        //else
+            //healthInfo.text = "";
         _curVal = curVal;
         _maxVal = maxVal;
         if (_curVal <= 0) _curVal = 0;

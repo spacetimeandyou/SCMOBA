@@ -46,7 +46,7 @@ namespace Lockstep.Collision2D {
 
             // Initial size (metres), initial centre position, minimum node size (metres), looseness
             foreach (var type in allTypes) {
-                var boundsTree = new BoundsQuadTree(worldSize, pos, minNodeSize, loosenessval);
+                var boundsTree = new BoundsQuadTree(worldSize, pos.ToLVector2XZ(), minNodeSize, loosenessval);
                 boundsTrees.Add(boundsTree);
             }
 

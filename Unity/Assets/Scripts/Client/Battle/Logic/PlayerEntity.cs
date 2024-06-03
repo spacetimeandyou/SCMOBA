@@ -23,9 +23,7 @@ class PlayerEntity : BaseEntity
             transform.deg = CTransform2D.TurnToward(targetDeg, transform.deg, 360 * deltaTime, out var hasReachDeg);
         }
     }//移动方向
-
-    public int skillID = 0;
-    public int skillTime = 3;
+    
     #region 出生点位置和旋转
     public LVector3 brithPosition;
     public LVector3 brithRotation;
@@ -50,16 +48,15 @@ class PlayerEntity : BaseEntity
         gameObject.transform.localRotation = Quaternion.Euler(brithRotation.x, transform.deg, brithRotation.z);
     }
     #endregion
-    
-    public int damage = BattleConfig.skillConfig[0];//普攻
     protected override void Init()
     {
         //设置血量
         maxHealth = 100;
         curHealth = maxHealth;
+        damage = BattleConfig.skillConfig[0];
     }
 
-    public virtual void TakeDamage(BaseEntity atker, int amount, LVector3 hitPoint)
+    public override void TakeDamage(BaseEntity atker, int amount, LVector3 hitPoint)
     {
         if (isDead) return;
         if (camp == atker.camp) return; 
@@ -71,7 +68,7 @@ class PlayerEntity : BaseEntity
         }
     }
 
-    protected virtual void OnDead()
+    protected override void OnDead()
     {
         entityView?.OnDead();
         PhysicSystem.Instance.RemoveCollider(this);

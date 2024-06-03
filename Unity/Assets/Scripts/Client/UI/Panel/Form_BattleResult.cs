@@ -50,10 +50,8 @@ class Form_BattleResult : UIBase
     //当按下确定按钮
     public void OnOkClick()
     {
-        ResourcesManager.Instance.AsyncLoadScene(SceneName.GameStart, () =>
-        {
-            UIManager.Instance.ActiveUI<Form_RoomList>(UIPanel.Form_RoomList);
-            UIManager.Instance.DeActiveUI<Form_BattleResult>(UIPanel.Form_BattleResult);
-        });
+        UIManager.Instance.ActiveUI<Form_RoomList>(UIPanel.Form_RoomList);
+        UIManager.Instance.DeActiveUI<Form_BattleResult>(UIPanel.Form_BattleResult);
+        UIManager.Instance.DeActiveUI<Form_Battle>(UIPanel.Form_Battle);
     }
 }

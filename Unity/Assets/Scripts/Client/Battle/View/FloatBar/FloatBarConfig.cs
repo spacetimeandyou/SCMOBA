@@ -15,7 +15,7 @@ public class FloatBarConfig : ScriptableObject {
     public bool keepSize = true;
     public bool IsDrawOffDistance;
     public float drawDistance = 10;
-    public bool showHealthInfo;
+    public bool showHealthInfo = true;
     public HealthInfoAlignment healthInfoAlignment = HealthInfoAlignment.Center;
     public float healthInfoSize = 10;
 }
