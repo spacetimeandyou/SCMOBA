@@ -28,7 +28,7 @@ class TowerEntity:BaseEntity
     public override void TakeDamage(BaseEntity atker, int amount, LVector3 hitPoint)
     {
         if (isDead) return;
-        //if (camp == atker.camp) return;
+        if (camp == atker.camp) return;
         curHealth -= amount;
         entityView?.OnTakeDamage(amount, hitPoint);
         if (isDead)
